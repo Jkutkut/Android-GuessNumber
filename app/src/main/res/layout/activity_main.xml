@@ -1,23 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="?background">
+    android:background="@color/bg_5_dark">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_sides"
+        android:layout_marginStart="@dimen/margin_sides"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:textSize="@dimen/font_size_title"
+        android:text="@string/guessesRemaining"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Try to guess the random number between 1 and 100. You have 5 attempts."
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/subject"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:textAlignment="center"
         android:textSize="@dimen/font_size_title"
         android:layout_marginRight="@dimen/margin_sides"
         android:layout_marginLeft="@dimen/margin_sides"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnGuess"
+        android:inputType="number"
+        android:layout_marginRight="@dimen/margin_sides"
+        android:layout_marginLeft="@dimen/margin_sides"
+        android:autofillHints="Number"
+        android:textColorHint="@color/white"/>
+
+    <Button
+        android:id="@+id/btnGuess"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/margin_sides"
+        android:text="@string/btn_guess"/>
+</RelativeLayout>
