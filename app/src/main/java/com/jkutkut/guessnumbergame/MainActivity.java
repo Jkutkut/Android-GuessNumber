@@ -2,9 +2,11 @@ package com.jkutkut.guessnumbergame;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,11 +14,34 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int ATTEMPTS = 5;
 
+    private static final int[][] PALETTE = {
+        { // Light mode
+            R.color.bg_5_light,
+            R.color.bg_4_light,
+            R.color.bg_3_light,
+            R.color.bg_2_light,
+            R.color.bg_1_light,
+            R.color.bg_invalid_light,
+            R.color.bg_valid_light
+        },
+        { // Dark mode
+            R.color.bg_5_dark,
+            R.color.bg_4_dark,
+            R.color.bg_3_dark,
+            R.color.bg_2_dark,
+            R.color.bg_1_dark,
+            R.color.bg_invalid_dark,
+            R.color.bg_valid_dark
+        }
+    };
+
     private boolean running;
+    private boolean won;
     private int remainingAttempts;
     private int nbrToGuess;
 
     // ********* UI Elements *********
+    private RelativeLayout menu;
     private TextView txtvRemaining;
     private TextView txtvInfo;
     private EditText etGuess;
@@ -31,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // ********* UI Elements *********
+        menu = findViewById(R.id.rlMenu);
         txtvRemaining = findViewById(R.id.txtvRemaining);
         txtvInfo = findViewById(R.id.txtvInfo);
         etGuess = findViewById(R.id.etGuess);
@@ -42,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         // ********* Game *********
         running = true;
+        won = false;
         remainingAttempts = ATTEMPTS;
         nbrToGuess = (int) ((Math.random() * 100) + 1);
         System.out.println("Number to guess: " + nbrToGuess);
@@ -65,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (guess == nbrToGuess) {
                 running = false;
+                won = true;
             }
             else if (guess < nbrToGuess) {
                 txtvInfo.setText(getString(R.string.tooLow));
@@ -82,21 +110,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void alert(String msg) {
-        Toast.makeText(
-            this,
-            msg,
-            Toast.LENGTH_LONG
-        ).show();
-    }
-
     private void updateRemaining() {
         if (!running) {
             txtvRemaining.setText("");
             txtvInfo.setText(
                 String.format(
                     getString(
-                        (remainingAttempts == 0) ? R.string.looseMsg : R.string.winMsg
+                        (won) ? R.string.winMsg : R.string.looseMsg
                     ),
                     nbrToGuess,
                     ATTEMPTS - remainingAttempts // TODO singular msg
@@ -113,5 +133,29 @@ public class MainActivity extends AppCompatActivity {
                 )
             );
         }
+        menu.setBackgroundColor(getBgColor());
+    }
+
+    // ********* Tools *********
+    private void alert(String msg) {
+        Toast.makeText(
+                this,
+                msg,
+                Toast.LENGTH_LONG
+        ).show();
+    }
+
+    private int getBgColor() {
+        int mode = (darkMode())? 1 : 0;
+        int index = ATTEMPTS - remainingAttempts;
+        if (!running && won)
+            index = ATTEMPTS;
+        return getColor(PALETTE[mode][index]);
+    }
+
+    private boolean darkMode() {
+        int nightModeFlags = this.getResources().getConfiguration().uiMode &
+                        Configuration.UI_MODE_NIGHT_MASK;
+        return nightModeFlags == Configuration.UI_MODE_NIGHT_YES;
     }
 }
