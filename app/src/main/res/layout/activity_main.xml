@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@color/bg_5_dark">
+    >
 
     <TextView
         android:layout_width="wrap_content"
@@ -27,17 +27,18 @@
         android:textAlignment="center"
         android:textSize="@dimen/font_size_title"
         android:layout_marginRight="@dimen/margin_sides"
-        android:layout_marginLeft="@dimen/margin_sides"/>
+        android:layout_marginLeft="@dimen/margin_sides"
+        android:labelFor="@id/etGuess"/>
 
     <EditText
+        android:id="@+id/etGuess"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btnGuess"
         android:inputType="number"
         android:layout_marginRight="@dimen/margin_sides"
         android:layout_marginLeft="@dimen/margin_sides"
-        android:autofillHints="Number"
-        android:textColorHint="@color/white"/>
+        android:autofillHints="Number"/>
 
     <Button
         android:id="@+id/btnGuess"

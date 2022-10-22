@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">GuessNumberGame</string>
+    <string name="subject">Try to guess the random number between 1 and 100. You have 5 attempts.</string>
+    <string name="guessesRemaining">5 guesses remaining</string>
+    <string name="btn_guess">Make a guess</string>
 </resources>
