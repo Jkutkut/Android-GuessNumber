@@ -9,6 +9,7 @@
     >
 
     <TextView
+        android:id="@+id/txtvRemaining"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_sides"
@@ -19,6 +20,7 @@
         android:text="@string/guessesRemaining"/>
 
     <TextView
+        android:id="@+id/txtvInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/subject"
@@ -45,6 +47,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/margin_sides"
-        android:text="@string/btn_guess"/>
+        android:layout_marginStart="@dimen/margin_sides"
+        android:layout_marginTop="@dimen/margin_sides"
+        android:layout_marginEnd="@dimen/margin_sides"
+        android:layout_marginBottom="@dimen/margin_sides"
+        android:text="@string/btn_guess" />
 </RelativeLayout>
