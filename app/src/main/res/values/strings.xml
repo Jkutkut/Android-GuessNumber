@@ -1,13 +1,14 @@
 <resources>
-    <string name="app_name">GuessNumberGame</string>
+    <string name="language">English</string>
+    <string name="app_name" translatable="false">GuessNumberGame</string>
     <string name="subject">Try to guess the random number between 1 and 100. You have %1$d attempts.</string>
-    <string name="guessesRemaining">%1$d guesses remaining</string>
-    <string name="btn_guess">Make a guess</string>
+    <string name="guessesRemaining">%1$d guesses remaining.</string>
+    <string name="btn_guess">Make a guess.</string>
     <string name="invalidNumberException">Please enter a number between 1 and 100</string>
     <string name="winMsg">You won with %2$d guesses!</string>
-    <string name="tooLow">The number is greater</string>
-    <string name="tooGreat">The number is lower</string>
-    <string name="looseMsg">You lost! The number was %1$d</string>
+    <string name="tooLow">The number is greater.</string>
+    <string name="tooGreat">The number is lower.</string>
+    <string name="looseMsg">You lost! The number was %1$d.</string>
     <string name="tbtnModeNight">Night</string>
     <string name="tbtnModeLight">Light</string>
 </resources>
