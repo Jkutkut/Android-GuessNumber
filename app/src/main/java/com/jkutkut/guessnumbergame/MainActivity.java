@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int ATTEMPTS = 5;
 
+    private boolean running;
     private int remainingAttempts;
     private int nbrToGuess;
 
@@ -40,8 +41,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // ********* Game *********
+        running = true;
         remainingAttempts = ATTEMPTS;
         nbrToGuess = (int) ((Math.random() * 100) + 1);
+        System.out.println("Number to guess: " + nbrToGuess);
         txtvInfo.setText(
             String.format(
                 getString(R.string.subject),
@@ -60,20 +63,22 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            remainingAttempts--;
             if (guess == nbrToGuess) {
-                txtvInfo.setText("You win!"); // TODO
+                running = false;
             }
             else if (guess < nbrToGuess) {
-                txtvInfo.setText("The number is greater"); // TODO
+                txtvInfo.setText(getString(R.string.tooLow));
             }
             else {
-                txtvInfo.setText("The number is smaller"); // TODO
+                txtvInfo.setText(getString(R.string.tooGreat));
+            }
+            if (--remainingAttempts == 0) {
+                running = false;
             }
             updateRemaining();
         }
         catch (NumberFormatException e) {
-            alert("Please enter a number between 1 and 100"); // TODO refactor into string.xml
+            alert(getString(R.string.invalidNumberException));
         }
     }
 
@@ -86,11 +91,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateRemaining() {
-        txtvRemaining.setText(
-            String.format(
-                getString(R.string.guessesRemaining),
-                remainingAttempts
-            )
-        );
+        if (!running) {
+            txtvRemaining.setText("");
+            txtvInfo.setText(
+                String.format(
+                    getString(
+                        (remainingAttempts == 0) ? R.string.looseMsg : R.string.winMsg
+                    ),
+                    nbrToGuess,
+                    ATTEMPTS - remainingAttempts // TODO singular msg
+                )
+            );
+            btnGuess.setEnabled(false);
+            btnGuess.setText("Game ended");
+        }
+        else {
+            txtvRemaining.setText(
+                String.format(
+                    (remainingAttempts == ATTEMPTS) ? "" : getString(R.string.guessesRemaining),
+                    remainingAttempts
+                )
+            );
+        }
     }
 }
