@@ -8,43 +8,51 @@
     tools:context=".MainActivity"
     android:id="@+id/rlMenu">
 
-    <Button
-        android:id="@+id/btnReset"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/tbtnMode"
-        android:layout_marginTop="@dimen/margin_sides"
-        android:layout_marginEnd="@dimen/margin_sides"
-        android:text="@string/btnReset"
-        android:background="#00000000"
-        android:textColor="?android:textColor"/>
-
-    <ToggleButton
-        android:id="@+id/tbtnMode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="@dimen/margin_sides"
-        android:layout_marginEnd="@dimen/margin_sides"
-        android:textOff="@string/tbtnModeNight"
-        android:textOn="@string/tbtnModeLight"
-        android:background="#00000000"
-        android:textColor="?android:textColor"/>
-
-    <TextView
-        android:id="@+id/txtvRemaining"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_sides"
         android:layout_marginStart="@dimen/margin_sides"
-        android:layout_alignParentStart="true"
-        android:textSize="@dimen/font_size_title"
-        android:background="#00000000"
-        android:textColor="?android:textColor"
-        android:layout_below="@id/btnReset"
-        android:text="@string/guessesRemaining"/>
+        android:layout_marginTop="@dimen/margin_sides"
+        android:layout_marginEnd="@dimen/margin_sides"
+        android:background="#00000000">
+
+        <TextView
+            android:id="@+id/txtvRemaining"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="@dimen/margin_sides"
+            android:background="#00000000"
+            android:text="@string/guessesRemaining"
+            android:textColor="?android:textColor"
+            android:textSize="@dimen/font_size_title"
+            android:layout_centerVertical="true"/>
+
+        <Button
+            android:id="@+id/btnReset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="@dimen/margin_sides"
+            android:layout_toStartOf="@+id/tbtnMode"
+            android:background="#00000000"
+            android:text="@string/btnReset"
+            android:textColor="?android:textColor"
+            android:layout_centerVertical="true"/>
+
+        <ToggleButton
+            android:id="@+id/tbtnMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:background="#00000000"
+            android:textColor="?android:textColor"
+            android:textOff="@string/tbtnModeNight"
+            android:textOn="@string/tbtnModeLight"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
 
     <TextView
         android:id="@+id/txtvInfo"

@@ -1,13 +1,11 @@
 package com.jkutkut.guessnumbergame;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.os.LocaleListCompat;
 
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -15,12 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import java.util.Locale;
-
 public class MainActivity extends AppCompatActivity {
-
-    // TODO horizontal orientation
-    // TODO exception while changing theme
 
     private static final int ATTEMPTS = 5;
 
@@ -87,9 +80,7 @@ public class MainActivity extends AppCompatActivity {
             else
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         });
-        btnGuess.setOnClickListener(v -> {
-            makeGuess();
-        });
+        btnGuess.setOnClickListener(v -> makeGuess());
 
         // ********* Game *********
         initGame();
@@ -209,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
 
     // ********* Session Restoration *********
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean("running", running);
         outState.putBoolean("won", won);
