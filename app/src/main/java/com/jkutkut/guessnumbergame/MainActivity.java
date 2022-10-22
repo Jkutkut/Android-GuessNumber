@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean won;
     private int remainingAttempts;
     private int nbrToGuess;
+    private int lastGuess;
 
     // ********* UI Elements *********
     private RelativeLayout menu;
@@ -76,26 +77,19 @@ public class MainActivity extends AppCompatActivity {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             else
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            updateRemaining();
-            // TODO keep current status
         });
         btnGuess.setOnClickListener(v -> {
             makeGuess();
         });
 
         // ********* Game *********
+        lastGuess = -1;
         running = true;
         won = false;
         remainingAttempts = ATTEMPTS;
         nbrToGuess = (int) ((Math.random() * 100) + 1);
         System.out.println("Number to guess: " + nbrToGuess);
-        txtvInfo.setText(
-            String.format(
-                getString(R.string.subject),
-                remainingAttempts
-            )
-        );
-        updateRemaining();
+        updateUI();
     }
 
     private void makeGuess() {
@@ -106,28 +100,22 @@ public class MainActivity extends AppCompatActivity {
                 alert("The number must be between 1 and 100"); // TODO
                 return;
             }
-
+            lastGuess = guess;
             if (guess == nbrToGuess) {
                 running = false;
                 won = true;
             }
-            else if (guess < nbrToGuess) {
-                txtvInfo.setText(getString(R.string.tooLow));
-            }
-            else {
-                txtvInfo.setText(getString(R.string.tooGreat));
-            }
             if (--remainingAttempts == 0) {
                 running = false;
             }
-            updateRemaining();
+            updateUI();
         }
         catch (NumberFormatException e) {
             alert(getString(R.string.invalidNumberException));
         }
     }
 
-    private void updateRemaining() {
+    private void updateUI() {
         if (!running) {
             txtvRemaining.setText("");
             txtvInfo.setText(
@@ -143,6 +131,17 @@ public class MainActivity extends AppCompatActivity {
             btnGuess.setText("Game ended");
         }
         else {
+            if (lastGuess == -1)
+                txtvInfo.setText(
+                    String.format(
+                        getString(R.string.subject),
+                        remainingAttempts
+                    )
+                );
+            else if (lastGuess < nbrToGuess)
+                txtvInfo.setText(getString(R.string.tooLow));
+            else
+                txtvInfo.setText(getString(R.string.tooGreat));
             txtvRemaining.setText(
                 String.format(
                     (remainingAttempts == ATTEMPTS) ? "" : getString(R.string.guessesRemaining),
@@ -174,5 +173,27 @@ public class MainActivity extends AppCompatActivity {
         int nightModeFlags = this.getResources().getConfiguration().uiMode &
                         Configuration.UI_MODE_NIGHT_MASK;
         return nightModeFlags == Configuration.UI_MODE_NIGHT_YES;
+    }
+
+    // ********* Session Restoration *********
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("running", running);
+        outState.putBoolean("won", won);
+        outState.putInt("remainingAttempts", remainingAttempts);
+        outState.putInt("nbrToGuess", nbrToGuess);
+        outState.putInt("lastGuess", lastGuess);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        running = savedInstanceState.getBoolean("running");
+        won = savedInstanceState.getBoolean("won");
+        remainingAttempts = savedInstanceState.getInt("remainingAttempts");
+        nbrToGuess = savedInstanceState.getInt("nbrToGuess");
+        lastGuess = savedInstanceState.getInt("lastGuess");
+        updateUI();
     }
 }
