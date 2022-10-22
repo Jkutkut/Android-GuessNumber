@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
     // ********* UI Elements *********
     private RelativeLayout menu;
+    private Button btnReset;
+    private Button btnLanguage;
     private ToggleButton tbtnMode;
     private TextView txtvRemaining;
     private TextView txtvInfo;
@@ -63,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
 
         // ********* UI Elements *********
         menu = findViewById(R.id.rlMenu);
+        btnReset = findViewById(R.id.btnReset);
+        btnLanguage = findViewById(R.id.btnLanguage);
         tbtnMode = findViewById(R.id.tbtnMode);
         txtvRemaining = findViewById(R.id.txtvRemaining);
         txtvInfo = findViewById(R.id.txtvInfo);
@@ -72,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
         tbtnMode.setChecked(!darkMode()); // Set tbtnMode to the current state
 
         // ********* UI Listeners *********
+        btnReset.setOnClickListener(v -> initGame());
+        // TODO language
         tbtnMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked)
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -83,6 +89,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // ********* Game *********
+        initGame();
+    }
+
+    private void initGame() {
         lastGuess = -1;
         running = true;
         won = false;
@@ -148,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
                     remainingAttempts
                 )
             ); // TODO singular msg
+            btnGuess.setEnabled(true);
         }
         menu.setBackgroundColor(getBgColor());
     }
