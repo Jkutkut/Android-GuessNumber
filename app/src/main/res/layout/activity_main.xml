@@ -13,22 +13,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/btnLanguage"
-        android:layout_marginTop="@dimen/margin_sides"
-        android:layout_marginEnd="@dimen/margin_sides"
-        android:text="@string/btnReset"
-        android:background="#00000000"
-        android:textColor="?android:textColor"/>
-
-    <Button
-        android:id="@+id/btnLanguage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_toStartOf="@+id/tbtnMode"
         android:layout_marginTop="@dimen/margin_sides"
         android:layout_marginEnd="@dimen/margin_sides"
-        android:text="@string/language"
+        android:text="@string/btnReset"
         android:background="#00000000"
         android:textColor="?android:textColor"/>
 

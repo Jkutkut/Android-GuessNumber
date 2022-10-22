@@ -2,9 +2,12 @@ package com.jkutkut.guessnumbergame;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.os.LocaleListCompat;
 
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -12,9 +15,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
 
     // TODO horizontal orientation
+    // TODO exception while changing theme
 
     private static final int ATTEMPTS = 5;
 
@@ -48,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
     // ********* UI Elements *********
     private RelativeLayout menu;
     private Button btnReset;
-    private Button btnLanguage;
     private ToggleButton tbtnMode;
     private TextView txtvRemaining;
     private TextView txtvInfo;
@@ -66,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
         // ********* UI Elements *********
         menu = findViewById(R.id.rlMenu);
         btnReset = findViewById(R.id.btnReset);
-        btnLanguage = findViewById(R.id.btnLanguage);
         tbtnMode = findViewById(R.id.tbtnMode);
         txtvRemaining = findViewById(R.id.txtvRemaining);
         txtvInfo = findViewById(R.id.txtvInfo);
@@ -77,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
 
         // ********* UI Listeners *********
         btnReset.setOnClickListener(v -> initGame());
-        // TODO language
         tbtnMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked)
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -107,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             int guess = Integer.parseInt(guessStr);
             if (guess < 1 || guess > 100) {
-                alert("The number must be between 1 and 100"); // TODO
+                alert(getString(R.string.guessNotInRange));
                 return;
             }
             lastGuess = guess;
@@ -126,40 +129,58 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
+        String info;
+        String remaining = "";
         if (!running) {
-            txtvRemaining.setText("");
-            txtvInfo.setText(
-                String.format(
-                    getString(
-                        (won) ? R.string.winMsg : R.string.looseMsg
-                    ),
-                    nbrToGuess,
-                    ATTEMPTS - remainingAttempts // TODO singular msg
-                )
-            );
+            // Update txtvInfo
+            if (won) {
+                if (remainingAttempts == ATTEMPTS - 1)
+                    info = getString(R.string.winMsgPerfect);
+                else {
+                    info = String.format(
+                            getString(R.string.winMsg),
+                            ATTEMPTS - remainingAttempts
+                    );
+                }
+            }
+            else {
+                info = String.format(
+                        getString(R.string.loseMsg),
+                        nbrToGuess
+                );
+            }
+
+            // Update btnGuess
             btnGuess.setEnabled(false);
-            btnGuess.setText("Game ended");
+            btnGuess.setText(getString(R.string.btnGuessDisabled));
         }
         else {
-            if (lastGuess == -1)
-                txtvInfo.setText(
-                    String.format(
+            // Update txtvInfo
+            if (lastGuess == -1) {
+                info = String.format(
                         getString(R.string.subject),
                         remainingAttempts
-                    )
                 );
+            }
             else if (lastGuess < nbrToGuess)
-                txtvInfo.setText(getString(R.string.tooLow));
+                info = getString(R.string.tooLow);
             else
-                txtvInfo.setText(getString(R.string.tooGreat));
-            txtvRemaining.setText(
-                String.format(
-                    (remainingAttempts == ATTEMPTS) ? "" : getString(R.string.guessesRemaining),
-                    remainingAttempts
-                )
-            ); // TODO singular msg
+                info = getString(R.string.tooHigh);
+
+            // Update txtvRemaining
+            // remainingAttempts == ATTEMPTS => ""
+            if (remainingAttempts < ATTEMPTS) {
+                remaining = (remainingAttempts == 1) ?
+                        getString(R.string.guessesRemainingSingular) :
+                        getString(R.string.guessesRemaining);
+            }
+            remaining = String.format(remaining, remainingAttempts);
+
+            // Update btnGuess
             btnGuess.setEnabled(true);
         }
+        txtvInfo.setText(info);
+        txtvRemaining.setText(remaining);
         menu.setBackgroundColor(getBgColor());
     }
 
@@ -176,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
         int mode = (darkMode())? 1 : 0;
         int index = ATTEMPTS - remainingAttempts;
         if (!running && won)
-            index = ATTEMPTS;
+            index = PALETTE[mode].length - 1;
         return getColor(PALETTE[mode][index]);
     }
 
