@@ -8,16 +8,28 @@
     tools:context=".MainActivity"
     android:id="@+id/rlMenu">
 
+    <ToggleButton
+        android:id="@+id/tbtnMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/margin_sides"
+        android:layout_marginEnd="@dimen/margin_sides"
+        android:textOff="@string/tbtnModeNight"
+        android:textOn="@string/tbtnModeLight"
+        android:background="#00000000"/>
+
     <TextView
         android:id="@+id/txtvRemaining"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_sides"
         android:layout_marginStart="@dimen/margin_sides"
-        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:textSize="@dimen/font_size_title"
         android:background="#00000000"
+        android:layout_below="@id/tbtnMode"
         android:text="@string/guessesRemaining"/>
 
     <TextView

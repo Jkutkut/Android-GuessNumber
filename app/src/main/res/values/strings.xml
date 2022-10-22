@@ -8,4 +8,6 @@
     <string name="tooLow">The number is greater</string>
     <string name="tooGreat">The number is lower</string>
     <string name="looseMsg">You lost! The number was %1$d</string>
+    <string name="tbtnModeNight">Night</string>
+    <string name="tbtnModeLight">Light</string>
 </resources>

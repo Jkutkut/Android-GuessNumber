@@ -10,8 +10,11 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 public class MainActivity extends AppCompatActivity {
+
+    // TODO horizontal orientation
 
     private static final int ATTEMPTS = 5;
 
@@ -43,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     // ********* UI Elements *********
     private RelativeLayout menu;
+    private ToggleButton tbtnMode;
     private TextView txtvRemaining;
     private TextView txtvInfo;
     private EditText etGuess;
@@ -56,18 +60,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-
-
         // ********* UI Elements *********
         menu = findViewById(R.id.rlMenu);
+        tbtnMode = findViewById(R.id.tbtnMode);
         txtvRemaining = findViewById(R.id.txtvRemaining);
         txtvInfo = findViewById(R.id.txtvInfo);
         etGuess = findViewById(R.id.etGuess);
         btnGuess = findViewById(R.id.btnGuess);
 
+        tbtnMode.setChecked(!darkMode()); // Set tbtnMode to the current state
+
+        // ********* UI Listeners *********
+        tbtnMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked)
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            else
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            updateRemaining();
+            // TODO keep current status
+        });
         btnGuess.setOnClickListener(v -> {
             makeGuess();
         });
