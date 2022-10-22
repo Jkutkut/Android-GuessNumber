@@ -1,6 +1,7 @@
 package com.jkutkut.guessnumbergame;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -54,6 +55,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+
 
         // ********* UI Elements *********
         menu = findViewById(R.id.rlMenu);
@@ -131,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                     (remainingAttempts == ATTEMPTS) ? "" : getString(R.string.guessesRemaining),
                     remainingAttempts
                 )
-            );
+            ); // TODO singular msg
         }
         menu.setBackgroundColor(getBgColor());
     }
