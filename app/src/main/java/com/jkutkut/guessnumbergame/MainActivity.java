@@ -15,6 +15,9 @@ import android.widget.ToggleButton;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int MAX = 10;
+    private static final int MIN = 1;
+
     private static final int ATTEMPTS = 5;
 
     private static final int[][] PALETTE = {
@@ -91,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         running = true;
         won = false;
         remainingAttempts = ATTEMPTS;
-        nbrToGuess = (int) ((Math.random() * 100) + 1);
+        nbrToGuess = (int) ((Math.random() * (MAX - MIN + 1)) + MIN);
         System.out.println("Number to guess: " + nbrToGuess);
         updateUI();
     }
@@ -100,8 +103,11 @@ public class MainActivity extends AppCompatActivity {
         String guessStr = etGuess.getText().toString();
         try {
             int guess = Integer.parseInt(guessStr);
-            if (guess < 1 || guess > 100) {
-                alert(getString(R.string.guessNotInRange));
+            if (guess < MIN || guess > MAX) {
+                alert(String.format(
+                    getString(R.string.guessNotInRange),
+                    MIN, MAX
+                ));
                 return;
             }
             lastGuess = guess;
@@ -115,7 +121,10 @@ public class MainActivity extends AppCompatActivity {
             updateUI();
         }
         catch (NumberFormatException e) {
-            alert(getString(R.string.invalidNumberException));
+            alert(String.format(
+                getString(R.string.invalidNumberException),
+                MIN, MAX
+            ));
         }
     }
 
@@ -150,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
             if (lastGuess == -1) {
                 info = String.format(
                         getString(R.string.subject),
+                        MIN, MAX,
                         remainingAttempts
                 );
             }

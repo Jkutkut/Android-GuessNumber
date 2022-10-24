@@ -6,13 +6,13 @@
     <string name="tooLow">El número es más grande.</string>
     <string name="tooHigh">El número es más pequeño.</string>
     <string name="winMsg">¡Has ganado en %1$d intentos!</string>
-    <string name="invalidNumberException">Introduce un número entre 1 y 100.</string>
+    <string name="invalidNumberException">Introduce un número entre %1$d y %2$d.</string>
     <string name="btn_guess">Hacer intento.</string>
     <string name="guessesRemaining">%1$d intentos restantes.</string>
-    <string name="subject">Intenta adivinar un número aleatorio entre 1 y 100. Tienes %1$d intentos.</string>
+    <string name="subject">Intenta adivinar un número aleatorio entre %1$d y %2$d. Tienes %3$d intentos.</string>
     <string name="language">Español</string>
     <string name="btnReset">Reiniciar</string>
-    <string name="guessNotInRange">El número tiene que ser entre 1 y 100.</string>
+    <string name="guessNotInRange">El número tiene que ser entre %1$d y %2$d.</string>
     <string name="guessesRemainingSingular">%1$d intento restante.</string>
     <string name="btnGuessDisabled">Juego terminado</string>
     <string name="winMsgPerfect">¡Lo has adivinado en tu primer intento!</string>
